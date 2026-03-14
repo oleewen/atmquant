@@ -12,8 +12,8 @@
 # 安装天勤SDK
 pip install tqsdk
 
-# 安装数据库驱动（SQLite）
-pip install vnpy_sqlite
+# 本项目默认使用 MySQL，需在 .env 中配置 DATABASE_* 并安装 vnpy_mysql（已在依赖中）
+# 无需安装 vnpy_sqlite
 ```
 
 ### 2. 配置数据源

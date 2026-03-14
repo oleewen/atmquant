@@ -10,7 +10,13 @@ pyqtgraph>=0.13.7
 plotly>=6.0.0
 qdarkstyle>=3.2.3
 
-# 数据库
+# 数据源（与 .env 中 DATAFEED_NAME 对应）
+# tushare: pip install vnpy_tushare
+# akshare: 使用本仓库 vnpy_akshare，需安装 akshare
+vnpy_tushare>=1.4.21
+akshare>=1.14.0
+
+# 数据库（默认 MySQL，不依赖 vnpy_sqlite）
 sqlalchemy>=2.0.0
 pymysql>=1.1.0
 

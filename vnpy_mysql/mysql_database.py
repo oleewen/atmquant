@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
+from urllib.parse import quote_plus
 
 from sqlalchemy import (
     create_engine, Column, Integer, String, Float, DateTime, 
@@ -23,8 +24,13 @@ from vnpy.trader.setting import SETTINGS
 # SQLAlchemy基础类
 Base = declarative_base()
 
-# 数据库连接配置
-DATABASE_URL = f"mysql+pymysql://{SETTINGS['database.user']}:{SETTINGS['database.password']}@{SETTINGS['database.host']}:{SETTINGS['database.port']}/{SETTINGS['database.database']}?charset=utf8mb4"
+# 数据库连接配置（对 user/password 做 URL 编码，避免含 @ 等字符导致 host 被错误解析）
+_user = quote_plus(SETTINGS.get("database.user", "") or "")
+_pass = quote_plus(SETTINGS.get("database.password", "") or "")
+_host = SETTINGS.get("database.host", "localhost")
+_port = SETTINGS.get("database.port", 3306)
+_db = SETTINGS.get("database.database", "atmquant")
+DATABASE_URL = f"mysql+pymysql://{_user}:{_pass}@{_host}:{_port}/{_db}?charset=utf8mb4"
 
 # 创建数据库引擎，使用连接池
 engine = create_engine(

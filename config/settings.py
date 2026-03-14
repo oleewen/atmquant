@@ -13,17 +13,21 @@ from tzlocal import get_localzone_name
 
 
 def load_env_file(env_file: str = ".env") -> None:
-    """加载.env文件到环境变量"""
-    env_path = Path(env_file)
+    """加载.env文件到环境变量。默认从项目根目录加载，不依赖当前工作目录。"""
+    if env_file == ".env":
+        # 项目根目录 = config 的上级
+        root = Path(__file__).resolve().parent.parent
+        env_path = root / ".env"
+    else:
+        env_path = Path(env_file)
     if not env_path.exists():
         return
-    
     try:
-        with open(env_path, 'r', encoding='utf-8') as f:
+        with open(env_path, "r", encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, value = line.split('=', 1)
+                if line and not line.startswith("#") and "=" in line:
+                    key, value = line.split("=", 1)
                     os.environ[key.strip()] = value.strip()
     except Exception as e:
         print(f"⚠️  加载.env文件失败: {e}")
@@ -59,7 +63,7 @@ def get_atmquant_settings() -> Dict[str, Any]:
         "datafeed.username": os.getenv("DATAFEED_USERNAME", ""),
         "datafeed.password": os.getenv("DATAFEED_PASSWORD", ""),
         
-        # 数据库设置
+        # 数据库设置（默认 SQLite）
         "database.timezone": get_localzone_name(),
         "database.name": os.getenv("DATABASE_TYPE", "sqlite"),
         "database.database": os.getenv("DATABASE_NAME", "atmquant.db"),

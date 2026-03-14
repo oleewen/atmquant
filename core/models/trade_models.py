@@ -22,13 +22,16 @@ try:
     from vnpy_mysql.mysql_database import Base, engine, get_db_session, close_db_session
 except ImportError:
     # 如果vnpy_mysql不可用，创建本地配置
+    from urllib.parse import quote_plus
+    from sqlalchemy import create_engine
     from vnpy.trader.setting import SETTINGS
     Base = declarative_base()
-    
-    # 数据库连接配置
-    DATABASE_URL = f"mysql+pymysql://{SETTINGS['database.user']}:{SETTINGS['database.password']}@{SETTINGS['database.host']}:{SETTINGS['database.port']}/{SETTINGS['database.database']}?charset=utf8mb4"
-    
-    # 创建数据库引擎
+    _u = quote_plus(SETTINGS.get("database.user", "") or "")
+    _p = quote_plus(SETTINGS.get("database.password", "") or "")
+    _h = SETTINGS.get("database.host", "localhost")
+    _port = SETTINGS.get("database.port", 3306)
+    _db = SETTINGS.get("database.database", "atmquant")
+    DATABASE_URL = f"mysql+pymysql://{_u}:{_p}@{_h}:{_port}/{_db}?charset=utf8mb4"
     engine = create_engine(DATABASE_URL, echo=False)
     
     # 创建会话工厂

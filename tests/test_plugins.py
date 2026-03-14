@@ -3,15 +3,19 @@
 """
 vnpy插件综合验证脚本
 验证所有核心插件是否正确安装
+使用 .env 中的数据库配置；默认 SQLite，无需额外服务。
 """
 
+import os
 import sys
+import subprocess
 from pathlib import Path
 from datetime import datetime
 
-# 添加项目根目录到Python路径
+# 添加项目根目录到Python路径，并切换到项目根以便加载 .env
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
+os.chdir(project_root)
 
 def test_all_plugins():
     """测试所有vnpy插件"""
@@ -25,7 +29,7 @@ def test_all_plugins():
         ("vnpy_ctastrategy", "CTA策略引擎"),
         ("vnpy_datamanager", "历史数据管理"),
         ("vnpy_ctabacktester", "回测引擎"),
-        ("vnpy_mysql", "MySQL数据库支持")
+        ("vnpy_sqlite", "SQLite数据库支持")
     ]
     
     success_count = 0
@@ -61,9 +65,9 @@ def test_all_plugins():
                 from vnpy_ctabacktester import CtaBacktesterApp
                 print("✓ 回测应用类导入成功")
                 
-            elif plugin_name == "vnpy_mysql":
-                from vnpy_mysql import Database
-                print("✓ MySQL数据库类导入成功")
+            elif plugin_name == "vnpy_sqlite":
+                from vnpy_sqlite import Database
+                print("✓ SQLite数据库类导入成功")
             
             success_count += 1
             print(f"✓ {plugin_name} 验证通过")
@@ -83,13 +87,99 @@ def test_all_plugins():
         print("⚠️ 部分插件安装失败，请检查安装过程")
         return False
 
+
+def _ensure_database_ready() -> bool:
+    """检查数据库可用：SQLite 无需服务；若为 MySQL 则检查连接。使用 .env 配置。"""
+    from config.settings import get_atmquant_settings
+
+    settings = get_atmquant_settings()  # 内部会从项目根目录加载 .env
+    db_name = (settings.get("database.name") or "sqlite").strip().lower()
+    if db_name == "sqlite":
+        # SQLite：检查数据库文件路径所在目录可写
+        db_path = (settings.get("database.database") or "atmquant.db").strip()
+        path = Path(db_path)
+        if path.is_absolute():
+            parent = path.parent
+        else:
+            parent = (project_root / db_path).parent
+        if not parent.exists():
+            try:
+                parent.mkdir(parents=True, exist_ok=True)
+            except Exception as e:
+                print(f"✗ SQLite 数据库目录不可用: {parent} - {e}")
+                return False
+        print("✓ SQLite 数据库就绪")
+        return True
+
+    # MySQL：检查服务可达
+    host = (settings.get("database.host") or "").strip() or "localhost"
+    port = int(settings.get("database.port") or 0) or 3306
+    user = (settings.get("database.user") or "").strip()
+    password = (settings.get("database.password") or "").strip()
+    database = (settings.get("database.database") or "atmquant").strip()
+
+    def try_connect():
+        try:
+            import pymysql
+            conn = pymysql.connect(
+                host=host,
+                port=port,
+                user=user,
+                password=password,
+                database=database,
+                connect_timeout=3,
+            )
+            conn.close()
+            return True
+        except Exception:
+            return False
+
+    if try_connect():
+        print("✓ MySQL 已就绪")
+        return True
+
+    print("⚠️ MySQL 连接失败，尝试启动 MySQL 服务...")
+    commands = []
+    if sys.platform == "darwin":
+        commands = [
+            ["brew", "services", "start", "mysql"],
+            ["mysql.server", "start"],
+        ]
+    elif sys.platform == "linux":
+        commands = [
+            ["systemctl", "start", "mysql"],
+            ["systemctl", "start", "mysqld"],
+            ["service", "mysql", "start"],
+        ]
+
+    for cmd in commands:
+        try:
+            subprocess.run(cmd, capture_output=True, timeout=10)
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            continue
+        import time
+        time.sleep(2)
+        if try_connect():
+            print("✓ MySQL 已启动并连接成功")
+            return True
+
+    print("✗ 无法连接 MySQL，请确认 .env 中 DATABASE_* 正确且服务已启动")
+    return False
+
+
 def test_vnpy_integration():
-    """测试vnpy主框架集成"""
+    """测试vnpy主框架集成（使用 .env 的数据库配置，默认 SQLite）"""
     print("\n" + "=" * 60)
     print("vnpy主框架集成测试")
     print("=" * 60)
-    
+
     try:
+        from config.settings import apply_settings
+
+        apply_settings()
+        if not _ensure_database_ready():
+            print("✗ vnpy集成测试跳过：数据库不可用")
+            return False
         from vnpy.event import EventEngine
         from vnpy.trader.engine import MainEngine
         print("✓ vnpy核心模块导入成功")
@@ -125,6 +215,12 @@ def test_vnpy_integration():
 
 def main():
     """主测试函数"""
+    # 先应用 .env 配置到 vnpy SETTINGS，避免 vnpy_sqlite 等插件导入时读到空配置
+    try:
+        from config.settings import apply_settings
+        apply_settings()
+    except ImportError:
+        pass
     # 测试插件安装
     plugins_ok = test_all_plugins()
     
@@ -139,7 +235,7 @@ def main():
         print("🎉 所有测试通过！vnpy插件环境配置完成！")
         print("\n下一步可以开始：")
         print("1. 配置CTP连接参数")
-        print("2. 设置MySQL数据库")
+        print("2. 配置数据库（可选，默认 SQLite）")
         print("3. 开发第一个策略")
         return True
     else:
