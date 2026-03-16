@@ -1,0 +1,5 @@
+id: BD-ATMQUANT
+name: 量化交易
+description: ATMQuant 核心业务域，包含图表展示、技术指标、策略与回测、数据与配置、日志与告警。
+owner: ATMQuant
+strategic_classification: core_domain

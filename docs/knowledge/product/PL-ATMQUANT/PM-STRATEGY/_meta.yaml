@@ -1,0 +1,7 @@
+id: PM-STRATEGY
+name: 策略研发
+description: 策略编写、加载、实盘/仿真运行。
+module_type: 核心功能
+relies_on_context_ids:
+  - BC-STRATEGY-RUN
+  - BC-INDICATOR-MGR

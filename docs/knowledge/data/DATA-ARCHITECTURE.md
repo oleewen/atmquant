@@ -1,74 +1,56 @@
-# 数据架构
+# 数据架构（ATMQuant）
 
 ## 元信息
 
-| 属性 | 值 |
-|------|-----|
-| 最后更新 | {YYYY-MM-DD} |
-| 关联文档 | [业务视角（领域）](../business/README.md)、[应用架构](../technical/SYS-ECOMMERCE-BACKEND/APPLICATION-ARCHITECTURE.md) |
+| 属性     | 值   |
+|----------|------|
+| 最后更新 | 2025-03-15 |
+| 关联文档 | [业务视角](knowledge/business/README.md)、[技术视角](knowledge/technical/README.md) |
 
 ## 数据存储全景
 
-| 存储 | 类型 | 用途 | 所属服务 | 数据量级 | 说明文档 |
-|------|------|------|---------|---------|----------|
-| user_db | MySQL | 用户数据 | svc-user | ~100万行 | 待补充 DS 目录 |
-| product_db | MySQL | 商品数据 | svc-product | ~500万行 | 待补充 DS 目录 |
-| order_db | MySQL | 订单数据 | svc-order | ~2000万行/年 | [DS-ORDER-MYSQL-PRIMARY](./DS-ORDER-MYSQL-PRIMARY/README.md) |
-| inventory_db | MySQL | 库存数据 | svc-inventory | ~500万行 | 待补充 DS 目录 |
-| payment_db | MySQL | 支付数据 | svc-payment | ~2000万行/年 | 待补充 DS 目录 |
-| redis-cluster | Redis | 缓存/会话/分布式锁 | 共享 | - | - |
-| es-cluster | Elasticsearch | 商品搜索索引 | svc-product | ~500万文档 | - |
-| oss | 对象存储 | 图片/文件 | 共享 | ~500GB | - |
+| 存储/来源       | 类型     | 用途             | 所属模块     | 说明文档 |
+|-----------------|----------|------------------|--------------|----------|
+| vnpy 本地/MySQL | SQLite/MySQL | 合约、Bar、Tick、Trade、持仓等 | vnpy_datamanager / 各 App | 见 vnpy 文档 |
+| 配置文件        | .env / YAML | 运行配置、数据源、网关、告警 | config       | .env.example |
+| 日志文件        | 文件系统 | 运行日志、告警记录 | core/logging | docs/logging-system.md |
+| 数据源 API      | Tushare/AKShare 等 | 历史 K 线、行情 | core/data、vnpy_* | docs/akshare_datafeed.md |
 
-## 核心表结构（按 DS 分拆）
+## 核心数据实体（逻辑）
 
-各数据存储的详细表结构见对应 DS 目录，本处仅做索引：
+与 vnpy 及 ATMQuant 代码对应：
 
-- **用户库 (user_db)**：待补充 DS 目录后在此链接。
-- **订单库 (order_db)**：见 [DS-ORDER-MYSQL-PRIMARY](./DS-ORDER-MYSQL-PRIMARY/README.md)（orders、order_items 及分片策略）。
-- 其他库：按需在对应 DS 目录下补充。
+| 实体概念   | 说明 | 主要使用处 |
+|------------|------|------------|
+| BarData    | K 线（OHLCV + 周期） | 图表、回测、指标计算 |
+| TickData   | Tick 行情           | 实盘、部分数据源 |
+| TradeData  | 成交记录           | 策略、回测结果 |
+| PositionData | 持仓               | 策略、交易面板 |
+| ContractData | 合约信息           | 数据管理、交易 |
+| 策略参数/状态 | 策略配置与运行时状态 | vnpy_ctastrategy、回测 |
 
-## 数据流转图
+## 数据流概览
 
 ```mermaid
 graph LR
-    subgraph 写入链路
-        APP[用户操作] --> API[API Gateway]
-        API --> SVC[业务服务]
-        SVC --> DB[(MySQL)]
-        SVC --> MQ{MQ}
-        MQ --> ES[(Elasticsearch)]
+    subgraph 接入
+        CTP[CTP 网关] --> Tick[TickData]
+        DataFeed[DataFeed] --> Bar[BarData]
     end
-    
-    subgraph 读取链路
-        QUERY[查询请求] --> CACHE{Redis缓存}
-        CACHE -->|命中| RESP[返回结果]
-        CACHE -->|未命中| DB2[(MySQL)]
-        DB2 --> CACHE
-        SEARCH[搜索请求] --> ES2[(Elasticsearch)]
+    subgraph 应用
+        Bar --> Chart[图表]
+        Bar --> Backtest[回测]
+        Bar --> Indicator[指标]
+        Tick --> Chart
+        Tick --> Strategy[策略]
+    end
+    subgraph 持久化
+        Bar --> DB[(SQLite/MySQL)]
+        Trade[TradeData] --> DB
     end
 ```
 
-## 缓存策略
+## 扩展说明
 
-| 缓存Key模式             | 数据来源            | 过期时间            | 更新策略                   | 说明                 |
-| ----------------------- | ------------------- | ------------------- | -------------------------- | -------------------- |
-| `user:{id}`             | user_db.users       | 30min               | Cache-Aside                | 用户基本信息         |
-| `product:{id}`          | product_db.products | 10min               | Cache-Aside + 变更事件失效 | 商品详情             |
-| `inventory:{sku}`       | inventory_db        | 不过期              | Write-Through              | 库存数量（高频读写） |
-| `token:blacklist:{jti}` | -                   | 与Token过期时间一致 | 写入即生效                 | Token黑名单          |
-
-## 数据分片策略（总览）
-
-分片按数据存储维度在各自 DS 目录中描述，此处仅作汇总：
-
-- **订单库 (order_db)**：orders / order_items 分片见 [DS-ORDER-MYSQL-PRIMARY](./DS-ORDER-MYSQL-PRIMARY/README.md#数据分片策略)。
-- 其他库：按需在各 DS 目录补充。
-
-## 数据备份与恢复
-
-| 数据库        | 备份方式    | 频率              | 保留期 | RTO    | RPO    |
-| ------------- | ----------- | ----------------- | ------ | ------ | ------ |
-| MySQL         | 全量+Binlog | 全量:日/增量:实时 | 30天   | 1小时  | 5分钟  |
-| Redis         | RDB + AOF   | RDB:小时/AOF:秒级 | 7天    | 10分钟 | 1秒    |
-| Elasticsearch | Snapshot    | 日                | 7天    | 2小时  | 24小时 |
+- 新增 **数据存储** 时：在 `data/` 下新建 `{DS-ID}/`，在本文「数据存储全景」中补充。
+- 新增 **数据实体** 时：在对应 DS 目录下用 `schema/{ENT-ID}.yaml` 描述，并可通过 `maps_to_aggregate_id` 关联业务聚合。

@@ -1,0 +1,4 @@
+id: BSD-LOGGING
+name: 日志与告警
+description: 日志分级与管理、告警规则与推送（飞书、钉钉等）。
+domain_expert: 运维与监控

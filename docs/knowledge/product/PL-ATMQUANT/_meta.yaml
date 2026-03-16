@@ -1,0 +1,5 @@
+id: PL-ATMQUANT
+name: ATMQuant 量化交易产品线
+description: 基于 vnpy 的 AI 量化交易框架，涵盖多周期图表、技术指标、策略研发、回测、数据与配置、日志告警。
+target_users: 量化开发者、个人交易者
+product_owner: ATMQuant

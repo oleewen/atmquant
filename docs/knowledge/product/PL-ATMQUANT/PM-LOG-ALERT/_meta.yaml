@@ -1,0 +1,6 @@
+id: PM-LOG-ALERT
+name: 日志与告警
+description: 日志分级、文件与控制台输出、飞书/钉钉告警机器人配置。
+module_type: 支撑功能
+relies_on_context_ids:
+  - BC-LOG-ALERT

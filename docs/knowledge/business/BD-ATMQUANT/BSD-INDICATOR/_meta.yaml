@@ -1,0 +1,4 @@
+id: BSD-INDICATOR
+name: 指标计算
+description: 技术指标（BOLL、SMA、EMA、MACD、RSI、DMI、成交量等）计算、无头计算器、与图表/策略联动。
+domain_expert: 技术指标与量化

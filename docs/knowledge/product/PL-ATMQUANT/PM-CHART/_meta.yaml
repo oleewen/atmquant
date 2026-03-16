@@ -1,0 +1,7 @@
+id: PM-CHART
+name: 多周期图表
+description: 双图/四图视图、多周期 K 线、技术指标叠加、光标与视口、X 轴延伸与专注模式。
+module_type: 核心功能
+relies_on_context_ids:
+  - BC-CHART-VIEW
+  - BC-INDICATOR-MGR

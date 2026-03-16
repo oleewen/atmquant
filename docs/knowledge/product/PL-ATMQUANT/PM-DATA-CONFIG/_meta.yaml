@@ -1,0 +1,6 @@
+id: PM-DATA-CONFIG
+name: 数据与配置
+description: 数据源选择（Tushare/AKShare 等）、.env 配置、合约管理、数据下载与存储。
+module_type: 支撑功能
+relies_on_context_ids:
+  - BC-DATA-CONFIG

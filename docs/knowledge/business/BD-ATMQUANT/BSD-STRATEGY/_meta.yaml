@@ -1,0 +1,4 @@
+id: BSD-STRATEGY
+name: 策略与回测
+description: 策略开发、回测引擎、信号生成与执行、参数优化。
+domain_expert: 策略研发

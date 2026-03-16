@@ -1,0 +1,7 @@
+id: PM-BACKTEST
+name: 回测
+description: 历史数据回测、绩效指标、参数优化、结果导出与图表展示。
+module_type: 核心功能
+relies_on_context_ids:
+  - BC-STRATEGY-RUN
+  - BC-DATA-CONFIG

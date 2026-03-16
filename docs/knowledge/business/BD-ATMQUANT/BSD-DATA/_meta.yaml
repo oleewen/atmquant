@@ -1,0 +1,4 @@
+id: BSD-DATA
+name: 数据与配置
+description: 数据源（DataFeed）、Bar/Tick 获取、环境配置（.env）、合约管理。
+domain_expert: 数据与配置
