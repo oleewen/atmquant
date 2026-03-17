@@ -1,0 +1,41 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2026-03-17",
+    "last_updated": "2026-03-17",
+    "completed": "2026-03-17"
+  },
+  "mode": "initial_scan",
+  "scan_level": "deep",
+  "project_root": "/Users/only/workspaces/atmquant",
+  "output_folder": "/Users/only/workspaces/atmquant/docs",
+  "repository_type": "monolith",
+  "project_types": [{"part_id": "main", "project_type_id": "backend", "display_name": "ATMQuant"}],
+  "completed_steps": [
+    {"step": "step_1", "status": "completed", "summary": "Classified as monolith, 1 part, Python desktop/backend"},
+    {"step": "step_2", "status": "completed", "summary": "Existing docs found in docs/, README, knowledge"},
+    {"step": "step_3", "status": "completed", "summary": "Tech stack: PySide6 + vnpy 4.1"},
+    {"step": "step_5", "status": "completed", "summary": "Source tree documented"},
+    {"step": "step_6", "status": "completed", "summary": "Dev/deployment guides written"},
+    {"step": "step_8", "status": "completed", "summary": "Architecture doc written"},
+    {"step": "step_9", "status": "completed", "summary": "Supporting docs written"},
+    {"step": "step_10", "status": "completed", "summary": "Master index generated"},
+    {"step_12", "status": "completed", "summary": "Workflow complete"}
+  ],
+  "current_step": "completed",
+  "findings": {
+    "project_classification": "monolith, 1 part, Python + PySide6 + vnpy",
+    "technology_stack": "Python 3.10+, PySide6, pyqtgraph, vnpy 4.1"
+  },
+  "outputs_generated": [
+    "project-scan-report.json",
+    "project-overview.md",
+    "source-tree-analysis.md",
+    "architecture.md",
+    "development-guide.md",
+    "component-inventory.md",
+    "data-models.md",
+    "index.md"
+  ],
+  "resume_instructions": "Documentation complete. Use index.md as entry point."
+}
