@@ -1,0 +1,8 @@
+id: "BC-DATA-CONFIG"
+name: "数据与配置上下文"
+description: "数据源选择与凭据、数据库连接、合约/时段等运行配置的边界；提供数据准备（下载/写库）能力。"
+implemented_by_app_id: "APP-ATMQUANT-DESKTOP"
+ubiquitous_language:
+  DataFeed: "数据源插件（tushare/akshare/tqsdk 等）"
+  Database: "本地或远端数据库连接（由 .env 注入到 vnpy SETTINGS）"
+  Contract: "交易合约/主连/加权合约等标识"

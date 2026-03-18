@@ -1,0 +1,8 @@
+id: "BC-LOG-ALERT"
+name: "日志与告警上下文"
+description: "日志分级与输出、告警规则与推送（飞书/钉钉等）的边界；为策略与运行时提供统一告警能力。"
+implemented_by_app_id: "APP-ATMQUANT-DESKTOP"
+ubiquitous_language:
+  Logger: "日志记录器（控制台/文件轮转）"
+  Alert: "告警消息（按级别与时间限制发送）"
+  Webhook: "机器人推送端点（敏感配置）"

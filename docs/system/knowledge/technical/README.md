@@ -10,8 +10,8 @@
 
 | 类型   | 名称                    | ID                     | 路径                                                           | 说明                |
 |--------|-------------------------|------------------------|----------------------------------------------------------------|---------------------|
-| 系统   | 电商后端                | SYS-ECOMMERCE-BACKEND  | [SYS-ECOMMERCE-BACKEND](./SYS-ECOMMERCE-BACKEND/)              | 电商业务核心系统；[应用架构](SYS-ECOMMERCE-BACKEND/APPLICATION-ARCHITECTURE.md) |
-| 应用   | 订单服务                | APP-ORDER-SERVICE      | [APP-ORDER-SERVICE](./SYS-ECOMMERCE-BACKEND/APP-ORDER/APP-ORDER-SERVICE.yaml) | 订单领域服务       |
+| 系统   | ATMQuant 交易系统        | SYS-ATMQUANT            | [SYS-ATMQUANT](./SYS-ATMQUANT/)                                | vnpy 桌面量化系统；[应用架构](SYS-ATMQUANT/APPLICATION-ARCHITECTURE.md) |
+| 应用   | ATMQuant 桌面应用        | APP-ATMQUANT-DESKTOP     | [APP-ATMQUANT-DESKTOP](./SYS-ATMQUANT/APP-ATMQUANT/APP-ATMQUANT-DESKTOP.yaml) | 主入口与插件挂载 |
 
 
 ---

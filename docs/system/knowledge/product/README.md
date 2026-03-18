@@ -9,8 +9,7 @@
 
 | 产品线                             | 产品模块                                                 | 功能点                                                                            |
 | ------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------ |
-| [PL-ECOMMERCE](./PL-ECOMMERCE/) | [PM-SHOPPING-CART](./PL-ECOMMERCE/PM-SHOPPING-CART/) | [FT-ADD-TO-CART](./PL-ECOMMERCE/PM-SHOPPING-CART/features/FT-ADD-TO-CART.yaml) |
-
+| [PL-ATMQUANT](./PL-ATMQUANT/)   | [PM-CHART](./PL-ATMQUANT/PM-CHART/)                  | （待补充）                                                                       |
 
 ---
 

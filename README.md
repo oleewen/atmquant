@@ -391,8 +391,8 @@ MIT License
 
 ## 相关链接
 
-- **GitHub**: https://github.com/seasonstar/atmquant
-- **Gitee**: https://gitee.com/seasonstar/atmquant
+- **GitHub**: https://github.com/oleewen/atmquant
+- **Gitee**: https://gitee.com/oleewen/atmquant
 - **公众号**: 堂主的ATMQuant
 - **知识星球**: 量策堂·AI算法指标策略
 

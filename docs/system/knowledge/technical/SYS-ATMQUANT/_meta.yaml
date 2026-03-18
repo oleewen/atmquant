@@ -1,0 +1,4 @@
+id: SYS-ATMQUANT
+name: ATMQuant 交易系统
+description: 基于 vnpy 4.1 的量化交易桌面系统，提供图表、指标、策略、回测、数据配置、日志告警等能力。
+architecture_style: 单体桌面应用（事件驱动 + 插件化）

@@ -8,10 +8,17 @@
 
 | 类型   | 名称         | ID            | 路径                                                              | 说明                      |
 |--------|--------------|---------------|-------------------------------------------------------------------|---------------------------|
-| 业务域 | 订单         | BD-ORDER      | [BD-ORDER](./BD-ORDER/)                                           | 订单相关核心业务           |
-| 子域   | 履约         | BSD-FULFILLMENT | [BSD-FULFILLMENT](./BD-ORDER/BSD-FULFILLMENT/)                  | 订单履约、配送等            |
-| 限界上下文 | 订单管理     | BC-ORDER-MGMT | [BC-ORDER-MGMT](./BD-ORDER/BSD-FULFILLMENT/BC-ORDER-MGMT/)        | 订单生命周期管理            |
-| 聚合   | 订单         | AGG-ORDER     | [AGG-ORDER](./BD-ORDER/BSD-FULFILLMENT/BC-ORDER-MGMT/aggregates/AGG-ORDER.yaml) | 聚合根-订单，一致性边界     |
+| 业务域 | 量化交易     | BD-ATMQUANT   | [BD-ATMQUANT](./BD-ATMQUANT/)                                      | ATMQuant 核心业务域        |
+| 子域   | 图表与展示   | BSD-CHART     | [BSD-CHART](./BD-ATMQUANT/BSD-CHART/)                               | 多周期图表与交互展示        |
+| 子域   | 指标计算     | BSD-INDICATOR | [BSD-INDICATOR](./BD-ATMQUANT/BSD-INDICATOR/)                       | 指标计算与配置/装载         |
+| 子域   | 策略与回测   | BSD-STRATEGY  | [BSD-STRATEGY](./BD-ATMQUANT/BSD-STRATEGY/)                         | 策略运行与回测              |
+| 子域   | 数据与配置   | BSD-DATA      | [BSD-DATA](./BD-ATMQUANT/BSD-DATA/)                                 | 数据源/数据库/运行配置       |
+| 子域   | 日志与告警   | BSD-LOGGING   | [BSD-LOGGING](./BD-ATMQUANT/BSD-LOGGING/)                           | 日志与告警推送              |
+| 限界上下文 | 图表展示 | BC-CHART-VIEW | [BC-CHART-VIEW](./BD-ATMQUANT/BSD-CHART/BC-CHART-VIEW/)               | 图表展示边界                |
+| 限界上下文 | 指标管理 | BC-INDICATOR-MGR | [BC-INDICATOR-MGR](./BD-ATMQUANT/BSD-INDICATOR/BC-INDICATOR-MGR/)    | 指标配置与扩展装载           |
+| 限界上下文 | 策略运行 | BC-STRATEGY-RUN | [BC-STRATEGY-RUN](./BD-ATMQUANT/BSD-STRATEGY/BC-STRATEGY-RUN/)        | 策略运行与回测边界           |
+| 限界上下文 | 数据与配置 | BC-DATA-CONFIG | [BC-DATA-CONFIG](./BD-ATMQUANT/BSD-DATA/BC-DATA-CONFIG/)               | 运行配置与数据准备           |
+| 限界上下文 | 日志与告警 | BC-LOG-ALERT | [BC-LOG-ALERT](./BD-ATMQUANT/BSD-LOGGING/BC-LOG-ALERT/)                | 日志与告警边界              |
 
 
 ---

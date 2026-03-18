@@ -1,0 +1,8 @@
+id: "BC-INDICATOR-MGR"
+name: "指标管理上下文"
+description: "技术指标计算、配置与装载的边界：指标渲染项、参数配置对话框、扩展指标动态加载。"
+implemented_by_app_id: "APP-ATMQUANT-DESKTOP"
+ubiquitous_language:
+  Indicator: "技术指标（如 BOLL、SMA、EMA、MACD、RSI、DMI）"
+  ConfigurableIndicator: "可配置指标协议（提供配置对话框与应用配置）"
+  ExtendedIndicator: "扩展指标模块（动态导入，可选装）"

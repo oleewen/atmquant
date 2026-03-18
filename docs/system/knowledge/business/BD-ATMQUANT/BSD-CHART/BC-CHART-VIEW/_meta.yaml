@@ -1,0 +1,8 @@
+id: "BC-CHART-VIEW"
+name: "图表展示上下文"
+description: "多周期K线图表与交互展示的边界：双图/四图、光标、视口、时间轴与专注模式等。"
+implemented_by_app_id: "APP-ATMQUANT-DESKTOP"
+ubiquitous_language:
+  Chart: "图表容器，承载主图/副图与交互"
+  Interval: "周期/时间框架（如 1m/15m/1h/1d）"
+  ViewBox: "图表视口与缩放/平移边界"

@@ -1,0 +1,8 @@
+id: "BC-STRATEGY-RUN"
+name: "策略运行上下文"
+description: "策略编写、加载、运行与回测的边界：交易时段识别、日志与告警封装、回测执行与结果展示。"
+implemented_by_app_id: "APP-ATMQUANT-DESKTOP"
+ubiquitous_language:
+  Strategy: "策略（继承 vnpy CTA 模板的交易逻辑）"
+  Backtest: "使用历史数据模拟执行与评估"
+  TradingSession: "交易时段定义（影响小时/半小时/日线聚合边界）"

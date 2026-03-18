@@ -1,0 +1,6 @@
+id: "APP-ATMQUANT-DESKTOP"
+name: "ATMQuant 桌面应用"
+description: "ATMQuant 主程序：加载配置，启动 vnpy 主引擎与 GUI，挂载网关与 App（CTA/回测/图表）。"
+repo_url: "https://github.com/oleewen/atmquant"
+owner_team: "ATMQuant"
+service_ids: []
