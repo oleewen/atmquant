@@ -91,9 +91,9 @@ atmquant/                          # 项目根目录
 │   ├── integration/                # 集成测试
 │   └── backtest/                   # 回测测试
 ├── 📁 docs/                        # 文档目录
-│   ├── README.md                   # 文档中心
-│   ├── logging-system.md          # 日志系统文档
-│   └── alert-bot-setup.md         # 告警机器人配置
+│   ├── INDEX.md                    # AI 可检索全局索引（推荐入口）
+│   ├── application/                # ATMQuant 应用文档（工程概览/架构/目录树等）
+│   └── system/                     # 系统文档与知识库（AI-SDD：knowledge/solutions/analysis/...）
 ├── 📁 examples/                    # 使用示例
 ├── 📁 articles/                    # 公众号文章
 ├── 📁 logs/                        # 日志文件

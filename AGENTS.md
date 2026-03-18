@@ -15,8 +15,8 @@ ATMQuant 是基于 vnpy 4.1 的开源 AI 量化交易框架，专注于图表可
 - **源码**：`core/`（charts、indicators、data、logging、strategies）、`config/`、`vnpy_*` 插件
 - **测试**：`tests/`（unit、integration、backtest）
 - **配置**：`config/`、`.env`（见 `.env.example`）
-- **文档**：`docs/`（文档中心），知识库 `docs/knowledge/`（四视角+宪法层）
-- **脚本**：`scripts/`、`main.py`
+- **文档**：`docs/`（AI 可检索总索引 `docs/INDEX.md`；应用文档 `docs/application/`；系统知识库 `docs/system/`）
+- **脚本**：`main.py`（入口）；`scripts/`（如存在，见 `docs/INDEX.md` 的未索引声明）
 
 ## 技术栈
 
@@ -44,11 +44,11 @@ pytest tests/ --cov=core --cov-report=term-missing
 ## 开发规范
 
 - **提交**：Conventional Commits（feat/fix/docs/style/refactor/test/chore），中文描述可接受。
-- **文档与需求**：澄清需求与设计优先于实现；解决方案与需求分析见 `docs/solutions/`、`docs/analysis/`；知识库见 `docs/knowledge/`。
+- **文档与需求**：澄清需求与设计优先于实现；系统级知识库/方案/需求流程入口见 `docs/system/INDEX.md`；AI 检索地图见 `docs/INDEX.md`。
 - **测试**：修改或新增逻辑时优先考虑测试；不删除或跳过已有测试。
 
 ## 参考文档
 
 - **项目与启动**：`README.md`
-- **文档体系与知识库**：`docs/README.md`、`docs/INDEX.md`、`docs/knowledge/README.md`
+- **文档体系与知识库**：`docs/INDEX.md`、`docs/application/INDEX.md`、`docs/system/INDEX.md`、`docs/system/knowledge/README.md`
 - **开发规范索引**：`.ai/CONVENTIONS.md`，规范源文件 `.ai/rules/`

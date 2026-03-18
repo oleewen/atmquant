@@ -1,52 +1,52 @@
-# ATMQuant 工程文档索引
+# 应用知识库 — 索引
 
-**类型：** 单体应用（Desktop/量化交易）  
-**主要语言：** Python 3.10+  
-**架构：** 事件驱动 + 插件化（vnpy 4.1）  
-**更新日期：** 2026-03-17
-
-## 项目概览
-
-ATMQuant 是基于 vnpy 4.1 的开源 AI 量化交易框架，侧重图表可视化与策略研发，提供多周期图表、技术指标库、策略开发与回测、轻量配置与日志告警。
-
-## 快速参考
-
-- **技术栈：** Python 3.10+、PySide6、pyqtgraph、vnpy 4.1、numpy/pandas、TA-Lib、loguru、SQLAlchemy
-- **入口：** `main.py`
-- **架构模式：** 事件驱动 + 插件化（MainEngine + App）
-- **数据库：** 默认 SQLite，可选 MySQL
-- **配置：** `.env` + `config/settings.py`
-
-## 生成的文档
-
-### 核心文档
-
-- [项目概览](./project-overview.md) - 执行摘要、技术栈、核心能力与文档地图
-- [源码树分析](./source-tree-analysis.md) - 带注释的目录树与关键目录说明
-- [技术架构](./architecture.md) - 架构模式、数据架构、组件与集成
-- [组件与指标清单](./component-inventory.md) - 图表组件、技术指标、策略、配置与 vnpy 插件
-- [开发指南](./development-guide.md) - 环境、运行、测试与常用开发任务
-- [数据模型](./data-models.md) - TradeData 及交易相关模型与接口
-
-### 已有文档（仓库内）
-
-- [项目 README](../README.md) - 项目说明与快速开始
-- [文档中心](./README.md) - 文档中心与知识库结构
-- [AGENTS.md](../AGENTS.md) - Agent 与开发规范
-
-## 入门步骤
-
-1. **环境：** Python 3.10+，`pip install -r requirements.txt`，`cp .env.example .env` 并编辑。
-2. **运行：** `python main.py`。
-3. **测试：** `pytest` 或 `pytest tests/unit -v`。
-
-## 面向 AI 辅助开发
-
-- **仅改图表/指标：** 参考 `architecture.md`、`component-inventory.md` 与 `core/charts`、`core/indicators`。
-- **改策略/回测：** 参考 `architecture.md`、`component-inventory.md` 与 `core/strategies`、vnpy_ctastrategy、vnpy_ctabacktester。
-- **改配置/数据/日志：** 参考 `config/`、`core/logging`、`core/data`、`data-models.md`。
-- **全栈理解：** 从 `index.md` → `project-overview.md` → `architecture.md` → `source-tree-analysis.md` 与各专项文档。
+本文件为具体应用或微服务的知识库与交付文档入口。结构、约定与管理方式参照主系统知识库（见 [../../system/INDEX.md](../../system/INDEX.md)），并结合应用自身需求，细化各核心交付物。
 
 ---
 
-_由 BMAD Method document-project 工作流生成_
+## 一、应用知识结构 
+
+> 建议与主库四视角（业务/产品/技术/数据）保持一致，如有特有视角、子域或模型可酌情扩展。
+
+| 入口 | 说明 |
+|------|------|
+| [./knowledge/README.md](./knowledge/README.md) | 应用知识四视角与映射约定 |
+| [./knowledge/business/](./knowledge/business/) | 应用级业务域/子域/聚合（BD/BC/AGG） |
+| [./knowledge/product/](./knowledge/product/) | 产品线/模块/功能点/用例（PL/PM/FT/UC） |
+| [./knowledge/technical/](./knowledge/technical/) | 应用子系统、服务、接口（APP/MS） |
+| [./knowledge/data/](./knowledge/data/) | 业务主数据、实体、数据字典（ENT/DS） |
+
+*可根据实际情况删减/补充，所有ID须保持全局唯一，跨仓库可追溯。*
+
+---
+
+## 二、应用方案与需求 (solutions, analysis, requirements)
+
+| 入口 | 说明 |
+|------|------|
+| [./solutions/README.md](./solutions/README.md) | 应用级解决方案（SOLUTION-）及标准 |
+| [./analysis/README.md](./analysis/README.md) | 需求分析（REQUIREMENT-） |
+| [./requirements/README.md](./requirements/README.md) | 需求交付（PRD/ADD/TDD 等） |
+| [./specs/](./specs/) | 详细接口/服务/数据规约 |
+
+- 方案、分析与交付文档应按推荐命名与目录组织，方便与主知识库映射 & 自动化追踪。
+- 可直接采用主库模板或自定义 `.ai/rules/` 补充校验要求。
+
+---
+
+## 三、关联与治理信息
+
+- [application/_meta.yaml](./application/_meta.yaml)：应用基础元信息（含 id、命名、治理锚点等）
+- [application/manifest.yaml](./application/manifest.yaml)：应用知识清单、接口规约等
+- 如需补充联邦治理/命名规范/扩展知识字段，参考主库 constitution、standards、principles
+
+---
+
+## 四、快速导航与模板引用
+
+- [README.md](./README.md)：应用知识库总览及快速初始化教程
+- [system/DESIGN.md](../../system/DESIGN.md) — 知识库设计原则与结构说明
+- [scripts/sdx-init.sh](../../scripts/sdx-init.sh) — 初始化工具
+- [system/INDEX.md](../../system/INDEX.md) — 系统知识库映射与关系字段
+
+---
